@@ -1,6 +1,7 @@
 import 'package:grpc/grpc.dart';
 
 class Utils {
+  // createClient method to create a client channel, which is similar to calling rest API using http client
   ClientChannel createClient() {
     final channel = ClientChannel(
       'localhost',
