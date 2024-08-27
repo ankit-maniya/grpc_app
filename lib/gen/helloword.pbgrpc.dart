@@ -37,6 +37,10 @@ class WelcomeProtoClient extends $grpc.Client {
       '/WelcomeProto/BidirectionalList',
       ($0.HelloRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.HelloResponse.fromBuffer(value));
+  static final _$getUser = $grpc.ClientMethod<$0.UserRequest, $0.UserResponse>(
+      '/WelcomeProto/GetUser',
+      ($0.UserRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.UserResponse.fromBuffer(value));
 
   WelcomeProtoClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -58,6 +62,10 @@ class WelcomeProtoClient extends $grpc.Client {
 
   $grpc.ResponseStream<$0.HelloResponse> bidirectionalList($async.Stream<$0.HelloRequest> request, {$grpc.CallOptions? options}) {
     return $createStreamingCall(_$bidirectionalList, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.UserResponse> getUser($0.UserRequest request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$getUser, request, options: options);
   }
 }
 
@@ -94,6 +102,13 @@ abstract class WelcomeProtoServiceBase extends $grpc.Service {
         true,
         ($core.List<$core.int> value) => $0.HelloRequest.fromBuffer(value),
         ($0.HelloResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.UserRequest, $0.UserResponse>(
+        'GetUser',
+        getUser_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.UserRequest.fromBuffer(value),
+        ($0.UserResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.HelloResponse> sayHello_Pre($grpc.ServiceCall call, $async.Future<$0.HelloRequest> request) async {
@@ -104,8 +119,13 @@ abstract class WelcomeProtoServiceBase extends $grpc.Service {
     yield* serverSideList(call, await request);
   }
 
+  $async.Future<$0.UserResponse> getUser_Pre($grpc.ServiceCall call, $async.Future<$0.UserRequest> request) async {
+    return getUser(call, await request);
+  }
+
   $async.Future<$0.HelloResponse> sayHello($grpc.ServiceCall call, $0.HelloRequest request);
   $async.Stream<$0.HelloResponse> serverSideList($grpc.ServiceCall call, $0.HelloRequest request);
   $async.Future<$0.HelloResponse> clientSideList($grpc.ServiceCall call, $async.Stream<$0.HelloRequest> request);
   $async.Stream<$0.HelloResponse> bidirectionalList($grpc.ServiceCall call, $async.Stream<$0.HelloRequest> request);
+  $async.Future<$0.UserResponse> getUser($grpc.ServiceCall call, $0.UserRequest request);
 }

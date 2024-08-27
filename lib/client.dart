@@ -10,6 +10,25 @@ void main(List<String> arguments) async {
   ClientChannel channel = utils.createClient();
   final stub = WelcomeProtoClient(channel);
 
+  // // simple rpc call
+  // simpleRpc(stub);
+
+  // // server side streaming call
+  // serverSideStreaming(stub);
+
+  // // client side streaming call
+  // clientSideStreaming(stub);
+
+  // // bidirectional streaming call
+  // bidirectionalStreaming(stub);
+
+  // get user call using simple rpc
+  await getUser(stub);
+
+  await channel.shutdown();
+}
+
+simpleRpc(stub) async {
   print(" <=== Start Simple RPC ===>");
   // requesting to server and getting response from server using async-await
   HelloRequest request = HelloRequest()..name = 'Ankit';
@@ -18,14 +37,18 @@ void main(List<String> arguments) async {
   print("response: ${response.message}");
 
   print(" <=== End Simple RPC ===>");
+}
 
+serverSideStreaming(stub) async {
   print(" <=== Start Streaming response from server ===>");
   HelloRequest streamReq = HelloRequest()..name = 'Maniya -> ';
   await for (var response in stub.serverSideList(streamReq)) {
     print("response: ${response.message}");
   }
   print(" <=== End Streaming response from server ===>");
+}
 
+clientSideStreaming(stub) async {
   print(" <=== Start Client Side Streaming ===>");
 
   // client side streaming without time interval
@@ -64,7 +87,9 @@ void main(List<String> arguments) async {
   print("finalResponse: ${finalResponse.message}");
 
   print(" <=== End Client Side Streaming ===>");
+}
 
+bidirectionalStreaming(stub) async {
   print(" <=== Start Bidirectional Streaming ===>");
   // Create a StreamController to manage the request stream
   final requestStream = StreamController<HelloRequest>();
@@ -90,6 +115,19 @@ void main(List<String> arguments) async {
   await sendRequests();
 
   print(" <=== End Bidirectional Streaming ===>");
+}
 
-  await channel.shutdown();
+getUser(stub) async {
+  // Get User
+  print(" <=== Start Get User ===>");
+
+  UserRequest getUserRequest = UserRequest()
+    // ..email = 'ankit@gmail.com'
+    ..username = 'ankitmaniya'
+    ..userType = e_usertype.OPERATOR;
+
+  UserResponse userDetails = await stub.getUser(getUserRequest);
+  print("User Details: ${userDetails.userInfo} ${userDetails.userType}");
+
+  print(" <=== End Get User ===>");
 }

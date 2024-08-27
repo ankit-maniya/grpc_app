@@ -11,6 +11,8 @@ service WelcomeProto {
 
     // Bidirectional streaming
     rpc BidirectionalList(stream HelloRequest) returns (stream HelloResponse) {}
+
+    rpc GetUser (UserRequest) returns (UserResponse) {}
 }
 
 message HelloRequest {
@@ -19,4 +21,24 @@ message HelloRequest {
 
 message HelloResponse {
     string message = 1;
+}
+
+enum e_usertype {
+    OPERATOR = 0;
+    MANAGER = 1;
+    DEVELOPER = 2;
+}
+
+message UserRequest {
+    oneof request_type {
+        string user_id = 1;
+        string email = 2;
+        string username = 3;
+    }
+    e_usertype user_type = 4;
+}
+
+message UserResponse {
+    string user_info = 1;
+    e_usertype user_type = 2;
 }

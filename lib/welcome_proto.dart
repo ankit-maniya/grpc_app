@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:grpc/grpc.dart';
 import 'package:grpc_app/gen/helloword.pbgrpc.dart';
@@ -73,5 +74,17 @@ class WelcomeProtoService extends WelcomeProtoServiceBase {
       // Process each request and yield a response
       yield HelloResponse()..message = 'Hello, ${req.name}';
     }
+  }
+
+  @override
+  Future<UserResponse> getUser(ServiceCall call, UserRequest request) {
+    print('Request:=>>>> ${request.toString()}');
+    // if user pass username then it will return 3 as it is defined as 3 inside proto file string username = 3;
+    print('request ; ${request.$_whichOneof(0)}');
+    var finalRespponse = UserResponse()
+      ..userInfo = 'Ankit'
+      ..userType = e_usertype.OPERATOR;
+
+    return Future.value(finalRespponse);
   }
 }
