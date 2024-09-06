@@ -2,23 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io' as io;
 
-import 'package:grpc/grpc.dart';
-import 'package:grpc_app/server_proto.dart';
-// import 'package:grpc_app/welcome_proto.dart';
-
-Future<void> main(List<String> arguments) async {
-  // creating Server instance
-  final server = Server.create(
-    services: [ServerProtoService()],
-    codecRegistry: CodecRegistry(codecs: const [GzipCodec(), IdentityCodec()]),
-  );
-
+Future main() async {
   io.stdin
     ..lineMode = false
     ..echoMode = false;
-
+    
   late StreamSubscription subscription;
-  StreamController<String> subController = StreamController<String>.broadcast();
 
   subscription = io.stdin.listen((List<int> codes) {
     var first = codes.first;
@@ -43,21 +32,7 @@ Future<void> main(List<String> arguments) async {
     } else {
       key = utf8.decode(codes);
     }
-    // ServerProtoService().controller.add(key);
-    print("key :: $key");
+    print(key);
   });
-
-  Future.delayed(Duration(seconds: 20), () {
-    subController.add("Me->Maniya");
-  });
-
-  ServerProtoService().changeReferance(subscription, subController);
-
-  // subscription.onData((handler) {
-  //   print("Data: $handler");
-  // });
-
-// running server at port 50051
-  await server.serve(address: "127.0.0.1", port: 50054);
-  print('Server listening... at port: ${server.port}');
+  print('Start listening');
 }

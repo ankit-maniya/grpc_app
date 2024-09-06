@@ -14,7 +14,19 @@ void main(List<String> arguments) async {
   // simpleRpc(stub);
 
   // // server side streaming call
-  // serverSideStreaming(stub);
+  print(" <=== Start Streaming response from server ===>");
+  HelloRequest streamReq = HelloRequest()..name = 'Maniya -> ';
+  // await stub.serverSideList(streamReq).listen((response) async {
+  //   print("response: ${response.message}");
+  // });
+  try {
+    await for (var response in stub.serverSideList(streamReq)) {
+      print("response: ${response.message}");
+    }
+  } catch (e) {
+    print("Error occurred while listening to the stream: $e");
+  }
+  print(" <=== End Streaming response from server ===>");
 
   // // client side streaming call
   // clientSideStreaming(stub);
@@ -23,9 +35,9 @@ void main(List<String> arguments) async {
   // bidirectionalStreaming(stub);
 
   // get user call using simple rpc
-  await getUser(stub);
+  // await getUser(stub);
 
-  await channel.shutdown();
+  // await channel.shutdown();
 }
 
 simpleRpc(stub) async {

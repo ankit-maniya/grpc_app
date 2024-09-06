@@ -126,7 +126,7 @@ enum UserRequest_RequestType {
 
 class UserRequest extends $pb.GeneratedMessage {
   factory UserRequest({
-    $core.String? userId,
+    $core.int? userId,
     $core.String? email,
     $core.String? username,
     e_usertype? userType,
@@ -158,7 +158,7 @@ class UserRequest extends $pb.GeneratedMessage {
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'UserRequest', createEmptyInstance: create)
     ..oo(0, [1, 2, 3])
-    ..aOS(1, _omitFieldNames ? '' : 'userId')
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'userId', $pb.PbFieldType.O3)
     ..aOS(2, _omitFieldNames ? '' : 'email')
     ..aOS(3, _omitFieldNames ? '' : 'username')
     ..e<e_usertype>(4, _omitFieldNames ? '' : 'userType', $pb.PbFieldType.OE, defaultOrMaker: e_usertype.OPERATOR, valueOf: e_usertype.valueOf, enumValues: e_usertype.values)
@@ -190,9 +190,9 @@ class UserRequest extends $pb.GeneratedMessage {
   void clearRequestType() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
-  $core.String get userId => $_getSZ(0);
+  $core.int get userId => $_getIZ(0);
   @$pb.TagNumber(1)
-  set userId($core.String v) { $_setString(0, v); }
+  set userId($core.int v) { $_setSignedInt32(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasUserId() => $_has(0);
   @$pb.TagNumber(1)
