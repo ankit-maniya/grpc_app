@@ -1,3 +1,3 @@
-printHello() {
-  print("Hello From GRPC_APP");
+printHello(context) {
+  context.log("Hello From GRPC_APP");
 }
